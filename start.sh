@@ -1,18 +1,18 @@
 #!/bin/bash
 
-# Instala dependências
-composer install --optimize-autoloader --no-dev
+# Gerar chave de aplicação se não existir
+php artisan key:generate --force
 
-# Configura variáveis de ambiente
+# Limpar cache
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear
+
+# Recriar cache
 php artisan config:cache
-php artisan route:cache
 php artisan view:cache
-
-# Executa migrations (opcional)
-php artisan migrate --force
-
-# Inicia o servidor
-php artisan serve --host=0.0.0.0 --port=10000
+php artisan route:cache
 
 # Iniciar PHP-FPM
 php-fpm -D
