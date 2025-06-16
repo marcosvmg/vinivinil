@@ -1,6 +1,6 @@
 # Dockerfile para Laravel com PHP 8.1 e extensões necessárias
 
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 # Instalar dependências do sistema
 RUN apt-get update && apt-get install -y \
