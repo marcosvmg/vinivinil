@@ -27,6 +27,9 @@ COPY nginx.conf /etc/nginx/sites-available/default
 # Instalar dependências
 RUN composer install --no-dev --optimize-autoloader
 
+# Gerar chave de aplicação
+RUN php artisan key:generate --force
+
 # Permissões
 RUN chown -R www-data:www-data storage bootstrap/cache
 RUN chmod -R 775 storage bootstrap/cache
