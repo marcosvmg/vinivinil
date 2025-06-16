@@ -13,3 +13,9 @@ php artisan migrate --force
 
 # Inicia o servidor
 php artisan serve --host=0.0.0.0 --port=10000
+
+# Iniciar PHP-FPM
+php-fpm -D
+
+# Iniciar Nginx
+nginx -g 'daemon off;'
