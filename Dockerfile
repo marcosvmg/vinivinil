@@ -1,4 +1,4 @@
-# Dockerfile para Laravel com PHP 8.1 e extensões necessárias
+# Dockerfile para Laravel com PHP 8.2 e extensões necessárias
 
 FROM php:8.2-fpm
 
@@ -22,8 +22,10 @@ WORKDIR /var/www/html
 # Copiar arquivos do projeto para o container
 COPY . .
 
-# Instalar dependências PHP via composer
-RUN composer install --no-dev --optimize-autoloader
+# Instalar dependências PHP via composer e limpar/cache config Laravel
+RUN composer install --no-dev --optimize-autoloader \
+  && php artisan config:clear \
+  && php artisan config:cache
 
 # Permissões (ajuste se necessário)
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
@@ -31,5 +33,5 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Expõe porta 9000 (PHP-FPM padrão)
 EXPOSE 9000
 
-# Start do PHP-FPM
+# Start do PHP-FPM com servidor Laravel na porta 8080
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
