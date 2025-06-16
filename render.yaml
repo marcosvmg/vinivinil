@@ -1,18 +1,44 @@
 services:
   - type: web
-    name: seu-app-laravel
-    runtime: php
+    name: vinivinil
+    env: php
     buildCommand: |
-      composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+      composer install --no-dev --optimize-autoloader
       php artisan config:cache
       php artisan view:cache
       php artisan route:cache
-      php artisan storage:link
-    startCommand: "php artisan serve --host=0.0.0.0 --port=10000"
+    startCommand: php artisan serve --host 0.0.0.0 --port 10000
     envVars:
       - key: APP_ENV
         value: production
       - key: APP_KEY
         generateValue: true
-      - key: LOG_CHANNEL
-        value: stderr
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromService:
+          name: vinivinil-db
+          type: postgres
+          property: host
+      - key: DB_PORT
+        value: 5432
+      - key: DB_DATABASE
+        fromService:
+          name: vinivinil-db
+          type: postgres
+          property: database
+      - key: DB_USERNAME
+        fromService:
+          name: vinivinil-db
+          type: postgres
+          property: user
+      - key: DB_PASSWORD
+        fromService:
+          name: vinivinil-db
+          type: postgres
+          property: password
+
+databases:
+  - name: vinivinil-db
+    databaseName: vinivinil
+    user: vinivinil

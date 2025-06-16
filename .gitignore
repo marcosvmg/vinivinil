@@ -6,8 +6,7 @@
 /storage/*.key
 /storage/pail
 /vendor
-!.env
-!render.yaml
+.env
 .env.backup
 .env.production
 .phpactor.json
@@ -22,3 +21,6 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+.env.*
+!.env.example
+.phpunit.cache
